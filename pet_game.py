@@ -1,5 +1,5 @@
 #my game-virtual pet
-
+'''
 dog = {
     "name": "Bane",
     "Stomach": 100,
@@ -44,3 +44,61 @@ Joy: %d
 
     # loop will run, it will need an input or prompted to end game
     hungry_and_lonely(dog)
+'''
+class Pet:
+    def __init__(self, name, fullness=50, happiness=50, hunger=5, mopiness=5):
+        self.name = name
+        self.fullness = fullness
+        self.happiness = happiness
+        self.hunger = hunger
+        self.mopiness = mopiness
+        self.toys = []
+        self.treats = []
+
+    def eat_food(self):
+        self.fullness += 30
+
+    def get_love(self):
+        self.happiness += 30
+
+    def be_alive(self):
+        self.fullness -= self.hunger
+        self.happiness -= self.mopiness
+        for toy in self.toys:
+            self.happiness += toy.use()
+
+    def reward_snack(self):
+        self.fullness -= self.hunger
+        self.happiness -= self.mopiness        
+        for treat in self.treats:
+            self.happiness += treat.snack()
+
+    def __str__(self):
+        return """
+        %s:
+        Fullness: %d
+        Happiness: %d
+        """ % (self.name, self.fullness, self.happiness)
+
+    def get_toy(self, toy):
+        self.toys.append(toy)
+
+    def get_treat(self, treat):
+        self.treats.append(treat)
+
+class CuddlyPet(Pet):
+    def __init__(self, name, fullness=50, happiness=50, hunger=5, mopiness=5):
+        super(CuddlyPet,self).__init__(name, fullness,100,hunger,1)
+        self.cuddle_level = cuddle_level
+    def be_alive(self):
+        self.fullness -= self.hunger
+        self.happiness -= self.mopiness/2
+        for toy in self.toys:
+            self.happiness += toy.use()
+
+    def cuddle(self, other_pet):
+        for i in range(self.cuddle_level):
+            other_pet.get_love()
+
+    def __str__(self):
+        return "Extra cuddly"
