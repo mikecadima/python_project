@@ -1,19 +1,18 @@
 from pet_game import Pet, CuddlyPet
-from toy import Toy
-from treat import Treat
+
 
 # Begin with no pets.
 pets = []
 CuddlyPet = []
-
+print("\033[30;4;42m Hello, Welcome to Virtual Pet! \033[0m")
 main_menu = [   
     "Adopt a Pet",
     "Play with Pet",
     "Feed Pet",
     "View status of pets",
     "Give toys to your pets",
-    "Do nothing",
     "Give your pet treats",
+    "Quit Game"
 ]
 
 def print_menu_error():
@@ -25,7 +24,7 @@ def choices_to_string(choice_list):
     for choice in choice_list:
         choice_string += "%d: %s\n" % (num, choice)
         num += 1
-    choice_string += "Please choose an option: "
+    choice_string += "\033[1m Please choose an option: \033[0m"
     return choice_string
 
 def get_user_choice(choice_list):
@@ -58,7 +57,7 @@ def main():
             if type_choice == 1:
                 pets.append(Pet(pet_name))
             elif type_choice == 2:
-                pets.append(CuddlyPet(pet_name))
+                pets.append(Pet(pet_name))
             print("You now have %d pets" % len(pets))
         if choice == 2:
             for pet in pets:
@@ -71,12 +70,21 @@ def main():
                 print(pet)
         if choice == 5:
             for pet in pets:
-                pet.get_toy(Toy())
+                pet.get_toy()
         if choice == 6:
-            for pet in pets:
-                pet.be_alive()
+            snack_choice = ("What snack would you like to give your pet? ")
+            print("Choose from pizza, bacon or vegan snack: ")
+            food_choice = get_user_choice(treat_menu)
+            if food_choice == 1:
+                pet.pizza()
+            elif food_choice == 2:
+                pet.bacon()
+            elif food_choice == 3:
+                pet.vegan_snack()
+
         if choice == 7:
-           for treat in treats:
-               treat.reward_snack()
+            print("\033[30;4;42m Thank you for playing! \033[0m")
+            exit()
         
 main()
+
